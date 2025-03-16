@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.ykomarnytskyi2022.domain.BaseShipmentProperties;
+import com.ykomarnytskyi2022.model.BaseShipmentProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

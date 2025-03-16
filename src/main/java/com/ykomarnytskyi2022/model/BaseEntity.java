@@ -1,4 +1,4 @@
-package com.ykomarnytskyi2022.domain;
+package com.ykomarnytskyi2022.model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
