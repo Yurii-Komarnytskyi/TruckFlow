@@ -7,6 +7,7 @@ import com.ykomarnytskyi2022.enums.ShippingUnit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -25,6 +26,9 @@ public class BillOfLading extends PDFDocument {
 	@Enumerated(EnumType.STRING)
 	private ShippingUnit shippingUnit;
 	
+	@NotNull
+	@OneToOne(mappedBy = "proofOfDelivery")
+	private ShipmentEntity shipment;
 
 	public BillOfLading() {
 		// default no-argument constructor for Spring JPA
