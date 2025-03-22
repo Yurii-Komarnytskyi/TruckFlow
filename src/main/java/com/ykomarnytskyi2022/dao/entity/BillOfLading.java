@@ -30,6 +30,14 @@ public class BillOfLading extends PDFDocument {
 	@OneToOne(mappedBy = "proofOfDelivery")
 	private ShipmentEntity shipment;
 
+	public ShipmentEntity getShipment() {
+		return shipment;
+	}
+
+	public void setShipment(ShipmentEntity shipment) {
+		this.shipment = shipment;
+	}
+
 	public BillOfLading() {
 		// default no-argument constructor for Spring JPA
 	}
