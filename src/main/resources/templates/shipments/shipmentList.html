@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome Page</title>
+    <link th:href="@{/styles/shipmentListStyles.css}" rel="stylesheet" />
+</head>
+
+<body>  
+
+    <div class="header">
+        <div>Shipment Id</div>
+        <div>SCAC code</div>
+        <div>Status</div>
+        <div>From</div>
+        <div>To</div>
+        <!-- <button><a href="#" th:object="${shipment}" th:href="@{'/shipments/' + ${shipment} + '/addNew'}">Add new</a></button> -->
+
+        <button><a href="#" th:href="@{'/shipments/addNew'}">Add new</a></button>
+    </div>
+
+    <div class="shpm" th:each="shipment : ${shipments}">
+        <div th:text="${shipment.shipmentID}"></div>
+        <div th:text="${shipment.scac}"></div>
+        <div th:text="${shipment.status}"></div>
+        <div th:text="${shipment.originCity + ' ' + shipment.originState}"></div>
+        <div th:text="${shipment.destinationCity + ' ' + shipment.destinationState}"></div>
+
+        <button> <a href="#" th:href="@{'/shipments/' + ${shipment.id} + '/edit'}">Edit</a> </button>
+        <button> <a href="#" th:href="@{'/shipments/' + ${shipment.id} + '/delete'}">Delete</a> </button>
+    </div>
+
+</body>
+</html>

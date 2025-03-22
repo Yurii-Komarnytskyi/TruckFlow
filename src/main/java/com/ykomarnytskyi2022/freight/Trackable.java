@@ -5,11 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.ykomarnytskyi2022.domain.BaseShipmentProperties;
+import com.ykomarnytskyi2022.model.BaseShipmentProperties;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "shipments")
 public abstract class Trackable extends BaseShipmentProperties {
 
 	static String shipperETA = "Could you advise on an ETA to the shipper in ";
@@ -38,6 +40,13 @@ public abstract class Trackable extends BaseShipmentProperties {
 				.collect(Collectors.joining(" "));
 	}
 	
+	@Override
+	public String toString() {
+		return "Trackable [organizationName=" + organizationName + ", shipmentNumber=" + shipmentNumber + ", status="
+				+ status + ", originCity=" + originCity + ", destinationCity=" + destinationCity + ", originState="
+				+ originState + ", destinationState=" + destinationState + ", id=" + id + "]";
+	}
+
 	public abstract String getSatusUpdate();
 	
 	public abstract String getScacCode();

@@ -1,9 +1,12 @@
-package com.ykomarnytskyi2022.domain;
+package com.ykomarnytskyi2022.model;
 
 import java.time.LocalDateTime;
 
 import com.ykomarnytskyi2022.freight.ShipmentStatus;
 
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class BaseShipmentProperties extends BaseEntity {
 	
 	protected String organizationName; 
@@ -18,4 +21,11 @@ public class BaseShipmentProperties extends BaseEntity {
 	protected LocalDateTime DNET;
 	protected LocalDateTime DNLT;
 	
+	@Override
+	public String toString() {
+		return "BaseShipmentProperties [organizationName=" + organizationName + ", shipmentNumber=" + shipmentNumber
+				+ ", status=" + status + ", originCity=" + originCity + ", destinationCity=" + destinationCity
+				+ ", originState=" + originState + ", destinationState=" + destinationState + "]";
+	}
+
 }
