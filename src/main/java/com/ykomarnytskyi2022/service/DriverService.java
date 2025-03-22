@@ -1,20 +1,29 @@
 package com.ykomarnytskyi2022.service;
 
-import com.ykomarnytskyi2022.dto.BillOfLadingDto;
-import com.ykomarnytskyi2022.dto.DriverShipmentDto;
-import com.ykomarnytskyi2022.dto.ProofOfDeliveryDto;
-import com.ykomarnytskyi2022.freight.BillOfLading;
-import com.ykomarnytskyi2022.freight.ProofOfDelivery;
-import com.ykomarnytskyi2022.freight.RoadAccident;
+import java.util.Optional;
+
+import com.ykomarnytskyi2022.dao.dto.BillOfLadingDto;
+import com.ykomarnytskyi2022.dao.dto.DriverDto;
+import com.ykomarnytskyi2022.dao.dto.DriverShipmentDto;
+import com.ykomarnytskyi2022.dao.dto.PageableDto;
+import com.ykomarnytskyi2022.dao.dto.ProofOfDeliveryDto;
+import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
+import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
+import com.ykomarnytskyi2022.dao.entity.BillOfLading;
+import com.ykomarnytskyi2022.dao.entity.ProofOfDelivery;
 import com.ykomarnytskyi2022.freight.ShipmentStatus;
-import com.ykomarnytskyi2022.freight.TransportationIssue;
 
 public interface DriverService {
 	boolean acceptShipment(DriverShipmentDto driverShipment);
 	boolean declineShipment(DriverShipmentDto driverShipment);
-	ShipmentStatus reportProgress();
-	TransportationIssue reportTransportationIssue();
-	RoadAccident reportRoadAccident();
-	BillOfLading uploadBOL(BillOfLadingDto billOflading);
-	ProofOfDelivery uploadPOD(ProofOfDeliveryDto proofOfDelivery);
+	void updateProgressOnShipment(Long shipmentId, ShipmentStatus status);
+	TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue);
+	RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident);
+	BillOfLading uploadBOL(BillOfLadingDto billOflading, Long shipmentId);
+	ProofOfDelivery uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId);
+	PageableDto<DriverShipmentDto> getDriverShipments(Long driverId);
+	PageableDto<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
+	Optional<DriverDto> findDriverById(Long driverId);
+	Optional<DriverDto> findDriverByCellPhone(String cellPhone);
+	
 }
