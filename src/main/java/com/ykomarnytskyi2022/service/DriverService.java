@@ -1,5 +1,6 @@
 package com.ykomarnytskyi2022.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.ykomarnytskyi2022.dao.dto.BillOfLadingDto;
@@ -9,8 +10,6 @@ import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ProofOfDeliveryDto;
 import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
-import com.ykomarnytskyi2022.dao.entity.BillOfLading;
-import com.ykomarnytskyi2022.dao.entity.ProofOfDelivery;
 import com.ykomarnytskyi2022.freight.ShipmentStatus;
 
 public interface DriverService {
@@ -19,10 +18,10 @@ public interface DriverService {
 	void updateProgressOnShipment(Long shipmentId, ShipmentStatus status);
 	TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue);
 	RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident);
-	BillOfLading uploadBOL(BillOfLadingDto billOflading, Long shipmentId);
-	ProofOfDelivery uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId);
+	BillOfLadingDto uploadBOL(BillOfLadingDto billOflading, Long shipmentId);
+	ProofOfDeliveryDto uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId);
 	PageableDto<DriverShipmentDto> getDriverShipments(Long driverId);
-	PageableDto<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
+	List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
 	Optional<DriverDto> findDriverById(Long driverId);
 	Optional<DriverDto> findDriverByCellPhone(String cellPhone);
 	
