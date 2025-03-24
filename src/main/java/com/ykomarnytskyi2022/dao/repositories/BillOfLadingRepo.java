@@ -1,4 +1,4 @@
-package com.ykomarnytskyi2022.repositories;
+package com.ykomarnytskyi2022.dao.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
