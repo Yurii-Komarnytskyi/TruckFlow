@@ -1,19 +1,24 @@
 package com.ykomarnytskyi2022.dao.entity;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import com.ykomarnytskyi2022.enums.ShippingUnit;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class BillOfLading extends PDFDocument {
 	@NotNull
-	private String hipperDetails;
+	private String shipperDetails;
 	
 	@NotNull
 	private String consigneeDetails;
@@ -29,6 +34,9 @@ public class BillOfLading extends PDFDocument {
 	@NotNull
 	@OneToOne(mappedBy = "proofOfDelivery")
 	private ShipmentEntity shipment;
+	
+	@ManyToOne
+	private Optional<Driver> driver;
 
 	public ShipmentEntity getShipment() {
 		return shipment;
@@ -90,12 +98,20 @@ public class BillOfLading extends PDFDocument {
 		this.dateOfUploading = dateOfUploading;
 	}
 
-	public String getHipperDetails() {
-		return hipperDetails;
+	public String getShipperDetails() {
+		return shipperDetails;
 	}
 
-	public void setHipperDetails(String hipperDetails) {
-		this.hipperDetails = hipperDetails;
+	public void setShipperDetails(String shipperDetails) {
+		this.shipperDetails = shipperDetails;
+	}
+
+	public Optional<Driver> getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Optional<Driver> driver) {
+		this.driver = driver;
 	}
 
 	public String getConsigneeDetails() {
