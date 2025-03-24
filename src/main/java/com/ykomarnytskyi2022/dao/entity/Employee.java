@@ -2,6 +2,7 @@ package com.ykomarnytskyi2022.dao.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import com.ykomarnytskyi2022.enums.Sex;
 
@@ -50,5 +51,32 @@ public class Employee {
 	protected String email;
 	
 	@NotNull
-	protected List<String> emergencyContacts;	
+	protected List<String> emergencyContacts;
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", lastName=" + lastName + ", cellPhone=" + cellPhone
+				+ ", birthDate=" + birthDate + ", sex=" + sex + ", age=" + age + ", email=" + email
+				+ ", emergencyContacts=" + emergencyContacts + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(age, birthDate, cellPhone, email, id, lastName, name, sex);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Employee)) {
+			return false;
+		}
+		Employee other = (Employee) obj;
+		return Objects.equals(age, other.age) && Objects.equals(birthDate, other.birthDate)
+				&& Objects.equals(cellPhone, other.cellPhone) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(name, other.name) && sex == other.sex;
+	}
 }
