@@ -1,4 +1,4 @@
-package com.ykomarnytskyi2022.freight;
+package com.ykomarnytskyi2022.enums;
 
 public enum ShipmentStatus {
 	SHIPMENT_PLANNING("shipment planning"),
