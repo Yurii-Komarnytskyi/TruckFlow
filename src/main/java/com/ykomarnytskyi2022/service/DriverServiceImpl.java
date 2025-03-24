@@ -16,8 +16,8 @@ import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
 import com.ykomarnytskyi2022.dao.entity.Driver;
-import com.ykomarnytskyi2022.freight.ShipmentStatus;
-import com.ykomarnytskyi2022.repositories.DriverRepo;
+import com.ykomarnytskyi2022.dao.repositories.DriverRepo;
+import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 @Service
 public class DriverServiceImpl implements DriverService {

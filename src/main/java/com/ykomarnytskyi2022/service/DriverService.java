@@ -10,7 +10,7 @@ import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ProofOfDeliveryDto;
 import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
-import com.ykomarnytskyi2022.freight.ShipmentStatus;
+import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 public interface DriverService {
 	boolean acceptShipment(DriverShipmentDto driverShipment);
