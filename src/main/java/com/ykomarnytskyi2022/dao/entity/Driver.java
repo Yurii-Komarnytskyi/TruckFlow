@@ -16,9 +16,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -40,7 +37,6 @@ public class Driver extends Employee {
 	private Set<DrivingLicence> authorizedDrivingCategories;
 	
 	@OneToOne
-	@Column(name = "currently_operated_vehicle")
 	private FreightVehicle currentlyOperatedVehicle;
 
 	public Driver() {

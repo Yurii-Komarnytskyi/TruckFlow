@@ -36,7 +36,7 @@ public class BillOfLading extends PDFDocument {
 	private ShipmentEntity shipment;
 	
 	@ManyToOne
-	private Optional<Driver> driver;
+	private Driver driver;
 
 	public ShipmentEntity getShipment() {
 		return shipment;
@@ -107,10 +107,10 @@ public class BillOfLading extends PDFDocument {
 	}
 
 	public Optional<Driver> getDriver() {
-		return driver;
+		return Optional.of(driver);
 	}
 
-	public void setDriver(Optional<Driver> driver) {
+	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
 
