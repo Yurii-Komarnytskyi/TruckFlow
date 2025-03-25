@@ -32,7 +32,7 @@ public class BillOfLading extends PDFDocument {
 	private ShippingUnit shippingUnit;
 	
 	@NotNull
-	@OneToOne(mappedBy = "proofOfDelivery")
+	@OneToOne(mappedBy = "billOfLading")
 	private Shipment shipment;
 	
 	@ManyToOne
