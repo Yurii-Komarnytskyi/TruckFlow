@@ -32,7 +32,7 @@ public class ProofOfDelivery extends PDFDocument {
 	
 	@NotNull
 	@OneToOne(mappedBy = "proofOfDelivery")
-	private ShipmentEntity shipment;
+	private Shipment shipment;
 	
 	public ProofOfDelivery() {
 		// default no-argument constructor for Spring JPA
@@ -106,7 +106,7 @@ public class ProofOfDelivery extends PDFDocument {
 		this.shipmentReference = shipmentReference;
 	}
 
-	public void setShipment(ShipmentEntity shipment) {
+	public void setShipment(Shipment shipment) {
 		this.shipment = shipment;
 	}
 }

@@ -33,16 +33,16 @@ public class BillOfLading extends PDFDocument {
 	
 	@NotNull
 	@OneToOne(mappedBy = "proofOfDelivery")
-	private ShipmentEntity shipment;
+	private Shipment shipment;
 	
 	@ManyToOne
 	private Driver driver;
 
-	public ShipmentEntity getShipment() {
+	public Shipment getShipment() {
 		return shipment;
 	}
 
-	public void setShipment(ShipmentEntity shipment) {
+	public void setShipment(Shipment shipment) {
 		this.shipment = shipment;
 	}
 

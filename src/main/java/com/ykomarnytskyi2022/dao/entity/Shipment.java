@@ -1,12 +1,14 @@
 package com.ykomarnytskyi2022.dao.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
-public class ShipmentEntity {
+@Entity
+public class Shipment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,7 +22,7 @@ public class ShipmentEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	private ProofOfDelivery proofOfDelivery;
 	
-	public ShipmentEntity() {
+	public Shipment() {
 		// default no-argument constructor for Spring JPA	
 	}
 
