@@ -1,10 +1,14 @@
 package com.ykomarnytskyi2022.dao.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -21,6 +25,9 @@ public class Shipment {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	private ProofOfDelivery proofOfDelivery;
+	
+	@OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY)
+	private List<RoadAccident> roadAccidents = new ArrayList<>();
 	
 	public Shipment() {
 		// default no-argument constructor for Spring JPA	
