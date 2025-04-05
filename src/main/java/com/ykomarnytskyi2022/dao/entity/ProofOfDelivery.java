@@ -28,7 +28,7 @@ public class ProofOfDelivery extends PDFDocument {
 	@Enumerated(EnumType.STRING)
 	private DeliveryStatus deliveryStatus;
 	
-	private Optional<String> shipmentReference;
+	private String shipmentReference;
 	
 	@NotNull
 	@OneToOne(mappedBy = "proofOfDelivery")
@@ -86,24 +86,48 @@ public class ProofOfDelivery extends PDFDocument {
 		this.dateOfUploading = dateOfUploading;
 	}
 
+	public LocalDateTime getDateOfDelivery() {
+		return dateOfDelivery;
+	}
+
 	public void setDateOfDelivery(LocalDateTime dateOfDelivery) {
 		this.dateOfDelivery = dateOfDelivery;
+	}
+
+	public Driver getDriver() {
+		return driver;
 	}
 
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
 
+	public String getRecipientInformation() {
+		return recipientInformation;
+	}
+
 	public void setRecipientInformation(String recipientInformation) {
 		this.recipientInformation = recipientInformation;
+	}
+
+	public DeliveryStatus getDeliveryStatus() {
+		return deliveryStatus;
 	}
 
 	public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
 
-	public void setShipmentReference(Optional<String> shipmentReference) {
+	public Optional<String> getShipmentReference() {
+		return Optional.ofNullable(shipmentReference);
+	}
+
+	public void setShipmentReference(String shipmentReference) {
 		this.shipmentReference = shipmentReference;
+	}
+
+	public Shipment getShipment() {
+		return shipment;
 	}
 
 	public void setShipment(Shipment shipment) {
