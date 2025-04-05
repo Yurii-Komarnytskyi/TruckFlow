@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 
-@Service
 public interface RoadAccidentService {
 	RoadAccidentDto saveRoadAccident(RoadAccidentDto roadAccident);
 	List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
