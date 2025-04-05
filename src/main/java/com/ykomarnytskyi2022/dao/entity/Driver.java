@@ -1,6 +1,8 @@
 package com.ykomarnytskyi2022.dao.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -8,6 +10,7 @@ import java.util.Set;
 import com.ykomarnytskyi2022.enums.DrivingLicence;
 import com.ykomarnytskyi2022.enums.Sex;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -18,26 +21,28 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Driver extends Employee {
 	@OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
 	@Column(name = "proof_of_deliveries")
-	private Set<ProofOfDelivery> proofOfDeliveries;
+	private Set<ProofOfDelivery> proofOfDeliveries = new HashSet<>();
 
 	@OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
 	@Column(name = "bill_of_ladings")
-	private Set<BillOfLading> billOfLadings;
+	private Set<BillOfLading> billOfLadings = new HashSet<>();
 
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
 	@Column(name = "driving_categories")
-	private Set<DrivingLicence> authorizedDrivingCategories;
+	private Set<DrivingLicence> authorizedDrivingCategories = new HashSet<>();
 	
 	@OneToOne
 	private FreightVehicle currentlyOperatedVehicle;
+	
+	@OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
+	private List<RoadAccident> roadAccidents = new ArrayList<>();
 
 	public Driver() {
 		// default no-argument constructor for Spring JPA
@@ -173,8 +178,4 @@ public class Driver extends Employee {
 		Driver other = (Driver) obj;
 		return Objects.equals(authorizedDrivingCategories, other.authorizedDrivingCategories);
 	}
-	
-	
-	
-	
 }
