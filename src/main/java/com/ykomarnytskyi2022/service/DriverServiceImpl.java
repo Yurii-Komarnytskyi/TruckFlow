@@ -1,6 +1,7 @@
 package com.ykomarnytskyi2022.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,10 @@ import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
 import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.repositories.DriverRepo;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -45,18 +50,16 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
-	public boolean acceptShipment(DriverShipmentDto driverShipment) {
-		Optional<Driver> optional = driverRepo.findById(driverShipment.getDriverId());
-		if (optional.isEmpty()) {
-			return false;
+	public void acceptShipment(@Valid DriverShipmentDto driverShipment) throws EntityNotFoundException , UnsupportedOperationException {
+		try {
+			DriverDto driver = mapper.map(driverRepo.findById(driverShipment.getDriverId()).orElseThrow(), DriverDto.class);
+			shipmentManagementService.assignDriverForShipment(driver, driverShipment.getId());
+		} catch (NoSuchElementException e) {
+			throw new EntityNotFoundException("Driver entity with Id : %s does not exist".formatted(driverShipment.getDriverId()));
+		} catch (EntityNotFoundException | UnsupportedOperationException e) {
+			throw e;
 		}
-		return shipmentManagementService.assignDriverForShipment(mapper.map(optional, DriverDto.class),
-				driverShipment.getId());
-	}
-
-	@Override
-	public boolean declineShipment(DriverShipmentDto driverShipment) {
-		return true;
+				
 	}
 
 	@Override

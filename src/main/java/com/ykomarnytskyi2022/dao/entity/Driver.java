@@ -10,7 +10,6 @@ import java.util.Set;
 import com.ykomarnytskyi2022.enums.DrivingLicence;
 import com.ykomarnytskyi2022.enums.Sex;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -43,6 +42,9 @@ public class Driver extends Employee {
 	
 	@OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
 	private List<RoadAccident> roadAccidents = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
+	private List<Shipment> shipments = new ArrayList<>();
 
 	public Driver() {
 		// default no-argument constructor for Spring JPA
@@ -150,6 +152,23 @@ public class Driver extends Employee {
 
 	public void setCurrentlyOperatedVehicle(FreightVehicle currentlyOperatedVehicle) {
 		this.currentlyOperatedVehicle = currentlyOperatedVehicle;
+	}
+	
+
+	public List<RoadAccident> getRoadAccidents() {
+		return roadAccidents;
+	}
+
+	public void setRoadAccidents(List<RoadAccident> roadAccidents) {
+		this.roadAccidents = roadAccidents;
+	}
+
+	public List<Shipment> getShipments() {
+		return shipments;
+	}
+
+	public void setShipments(List<Shipment> shipments) {
+		this.shipments = shipments;
 	}
 
 	@Override

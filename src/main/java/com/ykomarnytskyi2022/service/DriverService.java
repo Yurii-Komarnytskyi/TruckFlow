@@ -13,8 +13,7 @@ import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 public interface DriverService {
-	boolean acceptShipment(DriverShipmentDto driverShipment);
-	boolean declineShipment(DriverShipmentDto driverShipment);
+	void acceptShipment(DriverShipmentDto driverShipment);
 	void updateProgressOnShipment(Long shipmentId, ShipmentStatus status);
 	TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue);
 	RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident);
