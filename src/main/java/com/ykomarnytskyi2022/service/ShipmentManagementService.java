@@ -11,12 +11,13 @@ import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 public interface ShipmentManagementService {
-	boolean assignDriverForShipment(DriverDto driver, Long shipmentId);
-	boolean assignLogisticsCoordinatorForShipment(LogisticsCoordinatorDto logisticsCoordinator, Long shipmentId);
+	void assignDriverForShipment(DriverDto driver, Long shipmentId);
+	void assignLogisticsCoordinatorForShipment(LogisticsCoordinatorDto logisticsCoordinator, Long shipmentId);
 	Optional<ShipmentDto> findShipmentById(Long id);
 	ShipmentDto createShipment(ShipmentDto shipment);
 	void updateShipment(ShipmentDto shipment);
-	boolean cancelShipment(Long shipmentId);
+	void cancelShipment(Long shipmentId);
+	void deleteShipment(Long shipmentId);
 	void updateShipmentStatus(Long shipmentId, ShipmentStatus status);
 	Page<ShipmentDto> getShipmentsAssignedToDriver(Long driverId);
 	Page<ShipmentDto> getShipmentsAssignedToCoordinator(Long coordinatorId);
