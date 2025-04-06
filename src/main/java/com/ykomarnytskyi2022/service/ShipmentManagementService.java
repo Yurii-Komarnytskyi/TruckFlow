@@ -2,11 +2,11 @@ package com.ykomarnytskyi2022.service;
 
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
+import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
@@ -19,11 +19,11 @@ public interface ShipmentManagementService {
 	void cancelShipment(Long shipmentId);
 	void deleteShipment(Long shipmentId);
 	void updateShipmentStatus(Long shipmentId, ShipmentStatus status);
-	Page<ShipmentDto> getShipmentsAssignedToDriver(Long driverId);
-	Page<ShipmentDto> getShipmentsAssignedToCoordinator(Long coordinatorId);
-	Page<ShipmentDto> getAllShipments(Pageable pageable);
-	Page<ShipmentDto> getShipmentsByStatus(ShipmentStatus status);
-	Page<ShipmentDto> getShipmentsForLogisticsCoordinator(Long logisticsCoordinatorId);
-	Page<ShipmentDto> getShipmentsAssignedToCustomer(Long customerId);
-	Page<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable);
+	PageableDto<ShipmentDto> getShipmentsAssignedToDriver(Long driverId);
+	PageableDto<ShipmentDto> getShipmentsAssignedToCoordinator(Long coordinatorId);
+	PageableDto<ShipmentDto> getAllShipments(Pageable pageable);
+	PageableDto<ShipmentDto> getShipmentsByStatus(ShipmentStatus status);
+	PageableDto<ShipmentDto> getShipmentsForLogisticsCoordinator(Long logisticsCoordinatorId);
+	PageableDto<ShipmentDto> getShipmentsAssignedToCustomer(Long customerId);
+	PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable);
 }
