@@ -45,6 +45,10 @@ public class PageableDto<T> {
 		this.totalPages = totalPages;
 	}
 	
+	public static int calculateTotalPages(int listSize, int standardPageSize) {
+		return (listSize + standardPageSize - 1) / listSize;
+	}
+	
 	
 
 	@Override

@@ -22,7 +22,6 @@ import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -62,6 +61,7 @@ public class DriverServiceImpl implements DriverService {
 				
 	}
 
+
 	@Override
 	public void updateProgressOnShipment(Long shipmentId, ShipmentStatus status) {
 		Optional<ShipmentDto> shipmentOptional = shipmentManagementService.findShipmentById(shipmentId);
@@ -94,9 +94,10 @@ public class DriverServiceImpl implements DriverService {
 
 	@Override
 	public PageableDto<DriverShipmentDto> getDriverShipments(Long driverId) {
-		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).stream()
+		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).getPage().stream()
 				.map(s -> mapper.map(s, DriverShipmentDto.class)).toList();
-		return new PageableDto<>(page, page.size(), 0, calculateTotalPagesPerPegeableDto(page.size()));
+		int totalPages = PageableDto.calculateTotalPages(page.size(), STANDARD_PAGE_SIZE);
+		return new PageableDto<>(page, page.size(), 0, totalPages);
 	}
 
 	@Override
@@ -116,9 +117,5 @@ public class DriverServiceImpl implements DriverService {
 
 	private final DriverDto mapDriverToDto(Driver driver) {
 		return mapper.map(driver, DriverDto.class);
-	}
-
-	private static int calculateTotalPagesPerPegeableDto(int listSize) {
-		return (listSize + STANDARD_PAGE_SIZE - 1) / listSize;
 	}
 }
