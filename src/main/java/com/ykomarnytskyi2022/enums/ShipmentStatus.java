@@ -1,32 +1,22 @@
 package com.ykomarnytskyi2022.enums;
 
 public enum ShipmentStatus {
-	SHIPMENT_PLANNING("shipment planning"),
-	TENDERED("tendered"),
-	PENDING_PU("pending pick up"),
-	GATE_ARRIVAL("gate arrival"),
-	CONFIRMED_PU("confirmed pick up"),
-	DESTINATION_ARRIVED("destination arrived"),
-	CONFIRMED_DEL("confirmed delivery");
-	
-	private String status;
-	
-	private ShipmentStatus (String str) {
-		status = str;
-	}
-	
-	
-	public static ShipmentStatus fromString(String str) {
-		for (ShipmentStatus shipmentStatus : ShipmentStatus.values()) {
-			if (shipmentStatus.status.equals(str.trim().toLowerCase())) {
-				return shipmentStatus;
-			}
-		}
-		return ShipmentStatus.PENDING_PU;
-	}
+	PENDING("Pending - Awaiting assignment or preparation"),
+    ASSIGNED("Assigned - Driver and/or coordinator assigned, ready to start"),
+    AT_PICK_UP("At Pickup - Shipment is at the pickup location, loading in progress"),
+    IN_TRANSIT("In Transit - Shipment is on its way to the destination"),
+    AT_DELIVERY("At Delivery - Shipment has arrived at destination, unloading in progress"),
+    DELAYED("Delayed - Shipment is behind schedule due to issues"),
+    DELIVERED("Delivered - Shipment has reached its destination and been completed"),
+    CANCELLED("Cancelled - Shipment has been terminated before completion");
 
-	@Override
-	public String toString() {
-		return status;
-	}
+    private final String description;
+
+    ShipmentStatus(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
