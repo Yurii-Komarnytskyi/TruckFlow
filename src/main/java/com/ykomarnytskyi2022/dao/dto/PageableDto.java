@@ -8,6 +8,7 @@ public class PageableDto<T> {
     private long totalElements;
     private int currentPage;
     private int totalPages;
+    public static final int FIRST_PAGE_INDEX = 0;
     
     public PageableDto(
     		List<T> page, 
