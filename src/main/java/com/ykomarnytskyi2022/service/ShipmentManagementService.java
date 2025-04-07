@@ -23,7 +23,6 @@ public interface ShipmentManagementService {
 	PageableDto<ShipmentDto> getShipmentsAssignedToCoordinator(Long coordinatorId);
 	PageableDto<ShipmentDto> getAllShipments(Pageable pageable);
 	PageableDto<ShipmentDto> getShipmentsByStatus(ShipmentStatus status);
-	PageableDto<ShipmentDto> getShipmentsForLogisticsCoordinator(Long logisticsCoordinatorId);
 	PageableDto<ShipmentDto> getShipmentsAssignedToCustomer(Long customerId);
 	PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable);
 }
