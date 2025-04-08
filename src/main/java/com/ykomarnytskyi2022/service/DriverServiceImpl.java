@@ -97,7 +97,7 @@ public class DriverServiceImpl implements DriverService {
 
 	@Override
 	public PageableDto<DriverShipmentDto> getDriverShipments(Long driverId) {
-		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).getPage().stream()
+		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).page().stream()
 				.map(s -> mapper.map(s, DriverShipmentDto.class)).toList();
 		return new PageableDto<>(page, page.size(), PageableDto.FIRST_PAGE_INDEX, PageableDto.calculateTotalPages(page.size(), STANDARD_PAGE_SIZE));
 	}
