@@ -27,7 +27,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 
 	private final ShipmentRepo shipmentRepo;
 	private final ModelMapper mapper;
-	private final Logger logger = LoggerFactory.getLogger(ShipmentManagementServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShipmentManagementServiceImpl.class);
 	private static final int STANDARD_PAGE_SIZE = 20;
 
 	@Autowired

@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class DriverServiceImpl implements DriverService {
 	private final TransportationIssueSesvice transportationIssueSesvice;
 	private final RoadAccidentService roadAccidentService;
 	private final ModelMapper mapper;
+	private static final Logger LOGGER = LoggerFactory.getLogger(DriverServiceImpl.class);
 	private static final int STANDARD_PAGE_SIZE = 12;
 
 	@Autowired
