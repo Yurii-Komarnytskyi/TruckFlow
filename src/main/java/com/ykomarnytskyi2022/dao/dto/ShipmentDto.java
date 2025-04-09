@@ -1,13 +1,35 @@
 package com.ykomarnytskyi2022.dao.dto;
 
+import java.time.LocalDateTime;
+
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 public class ShipmentDto {
-	private ShipmentStatus status;
-
-	private DriverDto driver;
+	private Long id;
 	
-	private LogisticsCoordinatorDto coordinator;
+	private ShipmentStatus status;
+	
+    private String origin;
+
+    private String destination;
+    
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime pickedUpAt;
+
+    private LocalDateTime deliveredAt;
+    
+    private String goodsDescription;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public ShipmentStatus getStatus() {
 		return status;
@@ -17,19 +39,59 @@ public class ShipmentDto {
 		this.status = status;
 	}
 
-	public DriverDto getDriver() {
-		return driver;
+	public String getOrigin() {
+		return origin;
 	}
 
-	public void setDriver(DriverDto driver) {
-		this.driver = driver;
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
-	public LogisticsCoordinatorDto getCoordinator() {
-		return coordinator;
+	public String getDestination() {
+		return destination;
 	}
 
-	public void setCoordinator(LogisticsCoordinatorDto coordinator) {
-		this.coordinator = coordinator;
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public LocalDateTime getPickedUpAt() {
+		return pickedUpAt;
+	}
+
+	public void setPickedUpAt(LocalDateTime pickedUpAt) {
+		this.pickedUpAt = pickedUpAt;
+	}
+
+	public LocalDateTime getDeliveredAt() {
+		return deliveredAt;
+	}
+
+	public void setDeliveredAt(LocalDateTime deliveredAt) {
+		this.deliveredAt = deliveredAt;
+	}
+
+	public String getGoodsDescription() {
+		return goodsDescription;
+	}
+
+	public void setGoodsDescription(String goodsDescription) {
+		this.goodsDescription = goodsDescription;
 	}
 }
