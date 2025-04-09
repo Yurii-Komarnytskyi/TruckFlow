@@ -82,13 +82,13 @@ public class Shipment {
 	public Shipment() {
 		// default no-argument constructor for Spring JPA	
 	}
+	
+	public Shipment(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Driver getDriver() {
