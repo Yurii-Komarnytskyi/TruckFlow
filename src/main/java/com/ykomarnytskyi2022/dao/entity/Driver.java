@@ -1,6 +1,5 @@
 package com.ykomarnytskyi2022.dao.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.ykomarnytskyi2022.enums.DrivingLicence;
-import com.ykomarnytskyi2022.enums.Sex;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -52,75 +50,6 @@ public class Driver extends Employee {
 
 	public Driver(Long id) {
 		this.id = id;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getCellPhone() {
-		return cellPhone;
-	}
-
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
-	}
-
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public Sex getSex() {
-		return sex;
-	}
-
-	public void setSex(Sex sex) {
-		this.sex = sex;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public List<String> getEmergencyContacts() {
-		return emergencyContacts;
-	}
-
-	public void setEmergencyContacts(List<String> emergencyContacts) {
-		this.emergencyContacts = emergencyContacts;
 	}
 
 	public Set<ProofOfDelivery> getProofOfDeliveries() {
