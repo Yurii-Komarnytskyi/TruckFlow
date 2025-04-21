@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
+import com.ykomarnytskyi2022.dao.entity.Customer;
 import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.entity.LogisticsCoordinator;
 import com.ykomarnytskyi2022.dao.entity.Shipment;
@@ -58,26 +60,42 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	@Override
 	public void updateShipment(@Valid ShipmentDto dto) throws EntityNotFoundException {
 		Shipment shipment = shipmentRepo.getReferenceById(dto.getId());
-		shipment.setCreatedAt(dto.getCreatedAt());
 		shipment.setDeliveredAt(dto.getDeliveredAt());
 		shipment.setDestination(dto.getDestination());
 		shipment.setGoodsDescription(dto.getGoodsDescription());
 		shipment.setOrigin(dto.getOrigin());
 		shipment.setPickedUpAt(dto.getPickedUpAt());
 		shipment.setStatus(dto.getStatus());
-		shipment.setUpdatedAt(dto.getUpdatedAt());
 		shipmentRepo.save(shipment);
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> getShipmentsAssignedToDriver(Long driverId) {
-		List<ShipmentDto> page = shipmentRepo.findAllByDriverId(driverId).stream().map(this::mapShipmentToDto).toList();
+	public PageableDto<ShipmentDto> getShipmentsAssignedToDriver(Long id) {
+		List<ShipmentDto> page = shipmentRepo.findAllByDriverId(id).stream().map(this::mapShipmentToDto).toList();
 		return getStandardSizedPageableDto(page);
 	}
 
 	@Override
-	public ShipmentDto createShipment(ShipmentDto shipment) {
-		return null;
+	public CreateShipmentDto createShipment(@Valid CreateShipmentDto shipmentDto) {
+		Shipment shipment = new Shipment();
+		shipment.setDestination(shipmentDto.getDestination());
+		shipment.setGoodsDescription(shipmentDto.getGoodsDescription());
+		shipment.setOrigin(shipmentDto.getOrigin());
+		shipment.setStatus(shipmentDto.getStatus());
+		
+		if(shipmentDto.isCustomerPresent()) {
+			shipment.setCustomer(mapper.map(shipmentDto.getCustomerOptional().get(), Customer.class));
+		}  
+		if (shipmentDto.isDriverPresent()) {
+			shipment.setDriver(mapper.map(shipmentDto.getDriverOptional().get(), Driver.class));
+		}
+		if(shipmentDto.isLogisticsCoordinatorPresent()) {
+			shipment.setCoordinator(mapper.map(shipmentDto.getLogisticsCoordinatorOptional().get(), LogisticsCoordinator.class));
+		}
+		
+		Shipment persisted = shipmentRepo.save(shipment);
+		
+		return mapper.map(persisted, CreateShipmentDto.class);
 	}
 
 	@Override
@@ -119,6 +137,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 
 	@Override
 	public PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable) {
+		//TODO implement 
 		return null;
 	}
 

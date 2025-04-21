@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
+import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
@@ -14,7 +15,7 @@ public interface ShipmentManagementService {
 	void assignDriverForShipment(DriverDto driver, Long shipmentId);
 	void assignLogisticsCoordinatorForShipment(LogisticsCoordinatorDto logisticsCoordinator, Long shipmentId);
 	Optional<ShipmentDto> findShipmentById(Long id);
-	ShipmentDto createShipment(ShipmentDto shipment);
+	CreateShipmentDto createShipment(CreateShipmentDto shipmentDto);
 	void updateShipment(ShipmentDto shipment);
 	void cancelShipment(Long shipmentId);
 	void deleteShipment(Long shipmentId);
