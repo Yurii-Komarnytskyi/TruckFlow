@@ -13,10 +13,6 @@ public class ShipmentDto {
 
     private String destination;
     
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
     private LocalDateTime pickedUpAt;
 
     private LocalDateTime deliveredAt;
@@ -53,22 +49,6 @@ public class ShipmentDto {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	public LocalDateTime getPickedUpAt() {
