@@ -1,5 +1,5 @@
 package com.ykomarnytskyi2022.dao.dto;
 
-public class LogisticsCoordinatorDto {
+public record LogisticsCoordinatorDto (Long id) {
 
 }

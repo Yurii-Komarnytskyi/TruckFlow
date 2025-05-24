@@ -1,9 +1,12 @@
 package com.ykomarnytskyi2022.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.repositories.DriverRepo;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+
 @Service
 public class DriverServiceImpl implements DriverService {
 	private final DriverRepo driverRepo;
@@ -28,6 +34,7 @@ public class DriverServiceImpl implements DriverService {
 	private final TransportationIssueSesvice transportationIssueSesvice;
 	private final RoadAccidentService roadAccidentService;
 	private final ModelMapper mapper;
+	private static final Logger LOGGER = LoggerFactory.getLogger(DriverServiceImpl.class);
 	private static final int STANDARD_PAGE_SIZE = 12;
 
 	@Autowired
@@ -45,19 +52,18 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
-	public boolean acceptShipment(DriverShipmentDto driverShipment) {
-		Optional<Driver> optional = driverRepo.findById(driverShipment.getDriverId());
-		if (optional.isEmpty()) {
-			return false;
+	public void acceptShipment(@Valid DriverShipmentDto driverShipment) throws EntityNotFoundException , UnsupportedOperationException {
+		try {
+			DriverDto driver = mapper.map(driverRepo.findById(driverShipment.getDriverId()).orElseThrow(), DriverDto.class);
+			shipmentManagementService.assignDriverForShipment(driver, driverShipment.getId());
+		} catch (NoSuchElementException e) {
+			throw new EntityNotFoundException("Driver entity with Id : %s does not exist".formatted(driverShipment.getDriverId()));
+		} catch (EntityNotFoundException | UnsupportedOperationException e) {
+			throw e;
 		}
-		return shipmentManagementService.assignDriverForShipment(mapper.map(optional, DriverDto.class),
-				driverShipment.getId());
+				
 	}
 
-	@Override
-	public boolean declineShipment(DriverShipmentDto driverShipment) {
-		return true;
-	}
 
 	@Override
 	public void updateProgressOnShipment(Long shipmentId, ShipmentStatus status) {
@@ -91,9 +97,9 @@ public class DriverServiceImpl implements DriverService {
 
 	@Override
 	public PageableDto<DriverShipmentDto> getDriverShipments(Long driverId) {
-		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).stream()
+		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).page().stream()
 				.map(s -> mapper.map(s, DriverShipmentDto.class)).toList();
-		return new PageableDto<>(page, page.size(), 0, calculateTotalPagesPerPegeableDto(page.size()));
+		return new PageableDto<>(page, page.size(), PageableDto.FIRST_PAGE_INDEX, PageableDto.calculateTotalPages(page.size(), STANDARD_PAGE_SIZE));
 	}
 
 	@Override
@@ -113,9 +119,5 @@ public class DriverServiceImpl implements DriverService {
 
 	private final DriverDto mapDriverToDto(Driver driver) {
 		return mapper.map(driver, DriverDto.class);
-	}
-
-	private static int calculateTotalPagesPerPegeableDto(int listSize) {
-		return (listSize + STANDARD_PAGE_SIZE - 1) / listSize;
 	}
 }
