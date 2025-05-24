@@ -20,4 +20,10 @@ public class TransportationIssueSesviceImpl implements TransportationIssueSesvic
 		return null;
 	}
 
+	@Override
+	public TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

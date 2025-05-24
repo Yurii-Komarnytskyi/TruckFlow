@@ -21,4 +21,10 @@ public class RoadAccidentServiceImpl implements RoadAccidentService {
 	public List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id) {
 		return null;
 	}
+
+	@Override
+	public RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

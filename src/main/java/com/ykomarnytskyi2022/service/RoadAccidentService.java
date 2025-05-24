@@ -9,4 +9,5 @@ import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 public interface RoadAccidentService {
 	RoadAccidentDto saveRoadAccident(RoadAccidentDto roadAccident);
 	List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
+	RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident);
 }

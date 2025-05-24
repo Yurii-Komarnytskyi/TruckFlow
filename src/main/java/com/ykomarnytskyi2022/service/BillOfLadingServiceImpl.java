@@ -17,4 +17,10 @@ public class BillOfLadingServiceImpl implements BillOfLadingService {
 		return null;
 	}
 
+	@Override
+	public BillOfLadingDto uploadBOL(BillOfLadingDto billOflading, Long shipmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
