@@ -15,13 +15,7 @@ import com.ykomarnytskyi2022.enums.ShipmentStatus;
 public interface DriverService {
 	void acceptShipment(DriverShipmentDto driverShipment);
 	void updateProgressOnShipment(Long shipmentId, ShipmentStatus status);
-	TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue);
-	RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident);
-	BillOfLadingDto uploadBOL(BillOfLadingDto billOflading, Long shipmentId);
-	ProofOfDeliveryDto uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId);
 	PageableDto<DriverShipmentDto> getDriverShipments(Long driverId);
-	List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id);
 	Optional<DriverDto> findDriverById(Long driverId);
 	Optional<DriverDto> findDriverByCellPhone(String cellPhone);
-	
 }
