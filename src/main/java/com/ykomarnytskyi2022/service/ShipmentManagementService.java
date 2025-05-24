@@ -9,6 +9,7 @@ import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
+import com.ykomarnytskyi2022.dao.dto.ShipmentSearchCriteriaDto;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 public interface ShipmentManagementService {
@@ -25,5 +26,5 @@ public interface ShipmentManagementService {
 	PageableDto<ShipmentDto> getAllShipments(Pageable pageable);
 	PageableDto<ShipmentDto> getShipmentsByStatus(ShipmentStatus status);
 	PageableDto<ShipmentDto> getShipmentsAssignedToCustomer(Long customerId);
-	PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable);
+	PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteriaDto criteria, Pageable pageable);
 }
