@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
@@ -15,11 +17,13 @@ import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
+import com.ykomarnytskyi2022.dao.dto.ShipmentSearchCriteriaDto;
 import com.ykomarnytskyi2022.dao.entity.Customer;
 import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.entity.LogisticsCoordinator;
 import com.ykomarnytskyi2022.dao.entity.Shipment;
 import com.ykomarnytskyi2022.dao.repositories.ShipmentRepo;
+import com.ykomarnytskyi2022.dao.repositories.specifications.ShipmentSpecifications;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -136,9 +140,13 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteria criteria, Pageable pageable) {
-		//TODO implement 
-		return null;
+	public PageableDto<ShipmentDto> searchShipments(ShipmentSearchCriteriaDto criteria, Pageable pageable) {
+		Specification<Shipment> specification = ShipmentSpecifications.withCriteria(criteria);
+		Page<Shipment> shipmentsPage = shipmentRepo.findAll(specification, pageable);
+		List<ShipmentDto> page = shipmentsPage.stream()
+				.map(this::mapShipmentToDto)
+				.toList();
+		return getStandardSizedPageableDto(page);
 	}
 
 	@Override
