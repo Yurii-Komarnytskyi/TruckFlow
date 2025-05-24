@@ -14,5 +14,10 @@ public class ProofOfDeliveryServiceImpl implements ProofOfDeliveryService {
 	public ProofOfDeliveryDto saveProofOfDelivery(ProofOfDeliveryDto proofOfDelivery, Long shipmentId) {
 		return null;
 	}
+	@Override
+	public ProofOfDeliveryDto uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

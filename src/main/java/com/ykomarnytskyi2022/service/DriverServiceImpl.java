@@ -10,14 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ykomarnytskyi2022.dao.dto.BillOfLadingDto;
 import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.DriverShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
-import com.ykomarnytskyi2022.dao.dto.ProofOfDeliveryDto;
-import com.ykomarnytskyi2022.dao.dto.RoadAccidentDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
-import com.ykomarnytskyi2022.dao.dto.TransportationIssueDto;
 import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.repositories.DriverRepo;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
@@ -28,26 +24,17 @@ import jakarta.validation.Valid;
 @Service
 public class DriverServiceImpl implements DriverService {
 	private final DriverRepo driverRepo;
-	private final BillOfLadingService billOfLadingService;
-	private final ProofOfDeliveryService proofOfDeliveryService;
 	private final ShipmentManagementService shipmentManagementService;
-	private final TransportationIssueSesvice transportationIssueSesvice;
-	private final RoadAccidentService roadAccidentService;
 	private final ModelMapper mapper;
 	private static final Logger LOGGER = LoggerFactory.getLogger(DriverServiceImpl.class);
 	private static final int STANDARD_PAGE_SIZE = 12;
 
 	@Autowired
-	public DriverServiceImpl(DriverRepo driverRepo, BillOfLadingService billOfLadingService,
-			ProofOfDeliveryService proofOfDeliveryService, ShipmentManagementService shipmentManagementService,
-			TransportationIssueSesvice transportationIssueSesvice, RoadAccidentService roadAccidentService,
+	public DriverServiceImpl(DriverRepo driverRepo, 
+			ShipmentManagementService shipmentManagementService,
 			ModelMapper mapper) {
 		this.driverRepo = driverRepo;
-		this.billOfLadingService = billOfLadingService;
-		this.proofOfDeliveryService = proofOfDeliveryService;
 		this.shipmentManagementService = shipmentManagementService;
-		this.transportationIssueSesvice = transportationIssueSesvice;
-		this.roadAccidentService = roadAccidentService;
 		this.mapper = mapper;
 	}
 
@@ -64,7 +51,6 @@ public class DriverServiceImpl implements DriverService {
 				
 	}
 
-
 	@Override
 	public void updateProgressOnShipment(Long shipmentId, ShipmentStatus status) {
 		Optional<ShipmentDto> shipmentOptional = shipmentManagementService.findShipmentById(shipmentId);
@@ -76,35 +62,10 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
-	public TransportationIssueDto reportTransportationIssue(TransportationIssueDto transportationIssue) {
-		return transportationIssueSesvice.saveTransportationIssue(transportationIssue);
-	}
-
-	@Override
-	public RoadAccidentDto reportRoadAccident(RoadAccidentDto roadAccident) {
-		return roadAccidentService.saveRoadAccident(roadAccident);
-	}
-
-	@Override
-	public BillOfLadingDto uploadBOL(BillOfLadingDto billOflading, Long shipmentId) {
-		return billOfLadingService.saveBillOfLading(billOflading, shipmentId);
-	}
-
-	@Override
-	public ProofOfDeliveryDto uploadPOD(ProofOfDeliveryDto proofOfDelivery, Long shipmentId) {
-		return proofOfDeliveryService.saveProofOfDelivery(proofOfDelivery, shipmentId);
-	}
-
-	@Override
 	public PageableDto<DriverShipmentDto> getDriverShipments(Long driverId) {
 		List<DriverShipmentDto> page = shipmentManagementService.getShipmentsAssignedToDriver(driverId).page().stream()
 				.map(s -> mapper.map(s, DriverShipmentDto.class)).toList();
 		return new PageableDto<>(page, page.size(), PageableDto.FIRST_PAGE_INDEX, PageableDto.calculateTotalPages(page.size(), STANDARD_PAGE_SIZE));
-	}
-
-	@Override
-	public List<RoadAccidentDto> getRoadAccidentsByDriverId(Long id) {
-		return roadAccidentService.getRoadAccidentsByDriverId(id);
 	}
 
 	@Override
