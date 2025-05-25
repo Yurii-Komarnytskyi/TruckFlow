@@ -1,5 +1,7 @@
 package com.ykomarnytskyi2022.mapping;
 
+import java.util.Objects;
+
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +12,10 @@ import com.ykomarnytskyi2022.dao.entity.Driver;
 public class DriverFromDtoMapper extends AbstractConverter<DriverDto, Driver> {
 
 	@Override
-	protected Driver convert(DriverDto source) {
+	protected Driver convert(DriverDto source) throws IllegalArgumentException {
+		if(Objects.isNull(source)) {
+			throw new IllegalArgumentException("The source argument in a mapper cannot be null");
+		}
 		Driver driver = new Driver(source.getId());
 		driver.setAge(source.getAge());
 		driver.setAuthorizedDrivingCategories(source.getAuthorizedDrivingCategories());

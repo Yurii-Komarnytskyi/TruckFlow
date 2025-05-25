@@ -1,8 +1,14 @@
 package com.ykomarnytskyi2022.dao.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class DriverShipmentDto {
+	@NotNull
 	private Long id;
+	
+	@NotNull
 	private Long driverId;
+	
 	private boolean isAccepted;
 	
 	public DriverShipmentDto() {
