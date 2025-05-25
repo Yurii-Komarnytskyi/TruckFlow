@@ -11,9 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.DriverDto;
+import com.ykomarnytskyi2022.dao.dto.DriverShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
 import com.ykomarnytskyi2022.dao.dto.ShipmentDto;
@@ -31,6 +33,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @Service
+@Validated
 public class ShipmentManagementServiceImpl implements ShipmentManagementService {
 
 	private final ShipmentRepo shipmentRepo;
@@ -45,8 +48,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public void assignDriverForShipment(@Valid DriverDto driver, @NotNull Long id)
-			throws EntityNotFoundException, UnsupportedOperationException {
+	public void assignDriverForShipment(@Valid DriverShipmentDto driver, @NotNull Long id) {
 		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(id);
 		if (shipment.hasDriverAssigned() && !shipment.getDriver().getId().equals(driver.getId())) {
 			throw new UnsupportedOperationException(
@@ -57,7 +59,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public Optional<ShipmentDto> findShipmentById(Long id) {
+	public Optional<ShipmentDto> findShipmentById(@NotNull Long id) {
 		return shipmentRepo.findById(id).map(this::mapShipmentToDto);
 	}
 
@@ -74,7 +76,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> getShipmentsAssignedToDriver(Long id) {
+	public PageableDto<ShipmentDto> getShipmentsAssignedToDriver(@NotNull Long id) {
 		List<ShipmentDto> page = shipmentRepo.findAllByDriverId(id).stream().map(this::mapShipmentToDto).toList();
 		return getStandardSizedPageableDto(page);
 	}
@@ -108,8 +110,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public void updateShipmentStatus(@NotNull Long shipmentId, @NotNull ShipmentStatus status)
-			throws EntityNotFoundException {
+	public void updateShipmentStatus(@NotNull Long shipmentId, @NotNull ShipmentStatus status) {
 		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(shipmentId);
 		shipment.setStatus(status);
 		shipmentRepo.save(shipment);
@@ -164,19 +165,9 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 		shipmentRepo.deleteById(shipmentId);
 	}
 
-	private Shipment getShipmentByIdOrThrowEntityNotFound(Long id)
-			throws EntityNotFoundException, IllegalArgumentException {
-		Shipment shipment = null;
-		try {
-			Optional<Shipment> optional = shipmentRepo.findById(id);
-			if (optional.isEmpty()) {
-				throw new EntityNotFoundException("Shipment with Id: %s does not exist".formatted(id));
-			}
-			shipment = optional.get();
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Shipment Id parameter cannot be null");
-		}
-		return shipment;
+	private Shipment getShipmentByIdOrThrowEntityNotFound(@NotNull Long id) {
+		return shipmentRepo.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Shipment entity with Id: %s does not exist".formatted(id)));
 	}
 
 	private static <T> PageableDto<T> getStandardSizedPageableDto(List<T> page) {
