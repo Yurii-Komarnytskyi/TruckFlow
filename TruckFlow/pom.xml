@@ -83,7 +83,7 @@
 
 	<scm>
 		<developerConnection>
-			scm:git:https://github.com/Yurii-Komarnytskyi/TrackAndTraceAssistant.git</developerConnection>
+			scm:git:https://github.com/Yurii-Komarnytskyi/TruckFlow.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
