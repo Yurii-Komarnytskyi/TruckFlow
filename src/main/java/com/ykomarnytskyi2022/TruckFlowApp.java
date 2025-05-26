@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TransportationManagementApplication {
+public class TruckFlowApp {
 	public static void main(String[] args) {
-		SpringApplication.run(TransportationManagementApplication.class, args);
+		SpringApplication.run(TruckFlowApp.class, args);
 	}
 }
