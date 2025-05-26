@@ -10,12 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>TrackAndTraceAssistant</groupId>
+	<groupId>TruckFlow</groupId>
 	<artifactId>com.ykomarnytskyi2022</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TrackAndTraceAssistant</name>
-	<description>An assistant to help me out with my current job in logistics
-		industry</description>
+	<name>TruckFlow</name>
+	<description>Transportation Management System (TMS) built with Spring Boot, Docker, and PostgreSQL. Manages the entire logistics workflow for transporting goods via trucks, including order management, real-time tracking, and delivery confirmation. Supports multiple user roles and a scalable architecture for efficient supply chain operations.</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
