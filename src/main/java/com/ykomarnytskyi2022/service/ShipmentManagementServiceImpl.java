@@ -48,13 +48,13 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public void assignDriverForShipment(@Valid DriverShipmentDto driver, @NotNull Long id) {
+	public void assignDriverForShipment(@Valid DriverShipmentDto driverShipment, @NotNull Long id) {
 		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(id);
-		if (shipment.hasDriverAssigned() && !shipment.getDriver().getId().equals(driver.getId())) {
+		if (shipment.hasDriverAssigned() && !shipment.getDriver().getId().equals(driverShipment.shipmentId())) {
 			throw new UnsupportedOperationException(
 					"Shipment entity with Id: %s already has a driver assigned to it".formatted(id));
 		}
-		shipment.setDriver(mapper.map(driver, Driver.class));
+		shipment.setDriver(mapper.map(driverShipment, Driver.class));
 		shipmentRepo.save(shipment);
 	}
 

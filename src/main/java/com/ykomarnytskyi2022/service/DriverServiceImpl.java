@@ -47,7 +47,7 @@ public class DriverServiceImpl implements DriverService {
 		if(Objects.isNull(driverShipment)) {
 			throw new IllegalArgumentException("driverShipment argument cannot be null");
 		}
-		shipmentManagementService.assignDriverForShipment(driverShipment, driverShipment.getId());
+		shipmentManagementService.assignDriverForShipment(driverShipment, driverShipment.shipmentId());
 	}
 
 	@Override

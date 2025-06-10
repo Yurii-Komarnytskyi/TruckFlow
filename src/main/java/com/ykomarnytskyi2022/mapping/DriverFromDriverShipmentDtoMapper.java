@@ -16,7 +16,7 @@ public class DriverFromDriverShipmentDtoMapper extends AbstractConverter<DriverS
 		if(Objects.isNull(source)) {
 			throw new IllegalArgumentException("The source argument in a mapper cannot be null");
 		} 
-		return new Driver(source.getDriverId());
+		return new Driver(source.driverId());
 	}
 
 }
