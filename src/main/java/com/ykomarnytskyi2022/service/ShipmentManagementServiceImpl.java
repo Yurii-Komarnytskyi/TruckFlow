@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
-import com.ykomarnytskyi2022.dao.dto.DriverDto;
 import com.ykomarnytskyi2022.dao.dto.DriverShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.dto.PageableDto;
@@ -27,6 +26,7 @@ import com.ykomarnytskyi2022.dao.entity.Shipment;
 import com.ykomarnytskyi2022.dao.repositories.ShipmentRepo;
 import com.ykomarnytskyi2022.dao.repositories.specifications.ShipmentSpecifications;
 import com.ykomarnytskyi2022.enums.ShipmentStatus;
+import com.ykomarnytskyi2022.exceptions.EntityByIdDoesntExistException;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -49,7 +49,7 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 
 	@Override
 	public void assignDriverForShipment(@Valid DriverShipmentDto driverShipment, @NotNull Long id) {
-		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(id);
+		Shipment shipment = getShipmentByIdOrThrowEntityByIdDoesntExistException(id);
 		if (shipment.hasDriverAssigned() && !shipment.getDriver().getId().equals(driverShipment.shipmentId())) {
 			throw new UnsupportedOperationException(
 					"Shipment entity with Id: %s already has a driver assigned to it".formatted(id));
@@ -64,8 +64,8 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public void updateShipment(@Valid ShipmentDto dto) throws EntityNotFoundException {
-		Shipment shipment = shipmentRepo.getReferenceById(dto.getId());
+	public void updateShipment(@Valid ShipmentDto dto) {
+		Shipment shipment = getShipmentByIdOrThrowEntityByIdDoesntExistException(dto.getId());
 		shipment.setDeliveredAt(dto.getDeliveredAt());
 		shipment.setDestination(dto.getDestination());
 		shipment.setGoodsDescription(dto.getGoodsDescription());
@@ -105,19 +105,19 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public void cancelShipment(Long shipmentId) throws EntityNotFoundException {
+	public void cancelShipment(Long shipmentId) {
 		updateShipmentStatus(shipmentId, ShipmentStatus.CANCELLED);
 	}
 
 	@Override
 	public void updateShipmentStatus(@NotNull Long shipmentId, @NotNull ShipmentStatus status) {
-		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(shipmentId);
+		Shipment shipment = getShipmentByIdOrThrowEntityByIdDoesntExistException(shipmentId);
 		shipment.setStatus(status);
 		shipmentRepo.save(shipment);
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> getShipmentsAssignedToCoordinator(Long id) {
+	public PageableDto<ShipmentDto> getShipmentsAssignedToCoordinator(@NotNull Long id) {
 		List<ShipmentDto> page = shipmentRepo.findAllByCoordinatorId(id).stream().map(this::mapShipmentToDto).toList();
 		return getStandardSizedPageableDto(page);
 	}
@@ -129,13 +129,13 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> getShipmentsByStatus(ShipmentStatus status) {
+	public PageableDto<ShipmentDto> getShipmentsByStatus(@NotNull ShipmentStatus status) {
 		List<ShipmentDto> page = shipmentRepo.findAllByStatus(status).stream().map(this::mapShipmentToDto).toList();
 		return getStandardSizedPageableDto(page);
 	}
 
 	@Override
-	public PageableDto<ShipmentDto> getShipmentsAssignedToCustomer(Long id) {
+	public PageableDto<ShipmentDto> getShipmentsAssignedToCustomer(@NotNull Long id) {
 		List<ShipmentDto> page = shipmentRepo.findAllByCustomerId(id).stream().map(this::mapShipmentToDto).toList();
 		return getStandardSizedPageableDto(page);
 	}
@@ -153,21 +153,24 @@ public class ShipmentManagementServiceImpl implements ShipmentManagementService 
 	@Override
 	public void assignLogisticsCoordinatorForShipment(@Valid LogisticsCoordinatorDto coordinator, @NotNull Long id)
 			throws EntityNotFoundException {
-		Shipment shipment = getShipmentByIdOrThrowEntityNotFound(id);
+		Shipment shipment = getShipmentByIdOrThrowEntityByIdDoesntExistException(id);
 		shipment.setCoordinator(mapper.map(coordinator, LogisticsCoordinator.class));
 		shipmentRepo.save(shipment);
 
 	}
 
 	@Override
-	public void deleteShipment(@NotNull Long shipmentId) throws EntityNotFoundException {
-		getShipmentByIdOrThrowEntityNotFound(shipmentId);
-		shipmentRepo.deleteById(shipmentId);
+	public void deleteShipment(@NotNull Long shipmentId) {
+		if (shipmentRepo.existsById(shipmentId)) {
+			shipmentRepo.deleteById(shipmentId);
+		} else {
+			throw new EntityByIdDoesntExistException(shipmentId);
+		}
 	}
 
-	private Shipment getShipmentByIdOrThrowEntityNotFound(@NotNull Long id) {
+	private Shipment getShipmentByIdOrThrowEntityByIdDoesntExistException(@NotNull Long id) {
 		return shipmentRepo.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Shipment entity with Id: %s does not exist".formatted(id)));
+				.orElseThrow(() ->  new EntityByIdDoesntExistException(id));
 	}
 
 	private static <T> PageableDto<T> getStandardSizedPageableDto(List<T> page) {
