@@ -13,12 +13,16 @@ import com.ykomarnytskyi2022.dao.entity.Customer;
 import com.ykomarnytskyi2022.dao.entity.Driver;
 import com.ykomarnytskyi2022.dao.entity.LogisticsCoordinator;
 import com.ykomarnytskyi2022.dao.entity.Shipment;
+import com.ykomarnytskyi2022.exceptions.AbstractConverterSourceIsNullException;
 
 @Component
 public class CreateShipmentDtoFromShipmentMapper extends AbstractConverter<Shipment, CreateShipmentDto>{
 
 	@Override
 	protected CreateShipmentDto convert(Shipment source) {
+		if(Objects.isNull(source)) {
+			throw new AbstractConverterSourceIsNullException();
+		}
 		CreateShipmentDto createShipment =  new CreateShipmentDto();
 		Driver driver = source.getDriver();
 		Customer customer = source.getCustomer();

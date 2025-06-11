@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.ykomarnytskyi2022.dao.dto.DriverShipmentDto;
 import com.ykomarnytskyi2022.dao.entity.Driver;
+import com.ykomarnytskyi2022.exceptions.AbstractConverterSourceIsNullException;
 
 @Component
 public class DriverFromDriverShipmentDtoMapper extends AbstractConverter<DriverShipmentDto, Driver>{
@@ -14,7 +15,7 @@ public class DriverFromDriverShipmentDtoMapper extends AbstractConverter<DriverS
 	@Override
 	protected Driver convert(DriverShipmentDto source) throws IllegalArgumentException {
 		if(Objects.isNull(source)) {
-			throw new IllegalArgumentException("The source argument in a mapper cannot be null");
+			throw new AbstractConverterSourceIsNullException();
 		} 
 		return new Driver(source.driverId());
 	}
