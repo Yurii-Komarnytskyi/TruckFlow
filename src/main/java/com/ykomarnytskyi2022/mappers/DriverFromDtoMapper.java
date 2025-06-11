@@ -12,20 +12,19 @@ import com.ykomarnytskyi2022.dao.entity.Driver;
 public class DriverFromDtoMapper extends AbstractConverter<DriverDto, Driver> {
 
 	@Override
-	protected Driver convert(DriverDto source) throws IllegalArgumentException {
+	protected Driver convert(DriverDto source) {
 		if(Objects.isNull(source)) {
 			throw new IllegalArgumentException("The source argument in a mapper cannot be null");
 		}
-		Driver driver = new Driver(source.getId());
-		driver.setAge(source.getAge());
-		driver.setAuthorizedDrivingCategories(source.getAuthorizedDrivingCategories());
-		driver.setBillOfLadings(source.getBillOfLadings());
-		driver.setCellPhone(source.getCellPhone());
-		driver.setEmail(source.getEmail());
-		driver.setEmergencyContacts(source.getEmergencyContacts());
-		driver.setLastName(source.getLastName());
-		driver.setName(source.getName());
-		driver.setProofOfDeliveries(source.getProofOfDeliveries());
+		Driver driver = new Driver(source.id());
+		driver.setAuthorizedDrivingCategories(source.authorizedDrivingCategories());
+		driver.setBillOfLadings(source.billOfLadings());
+		driver.setCellPhone(source.cellPhone());
+		driver.setEmail(source.email());
+		driver.setEmergencyContacts(source.emergencyContacts());
+		driver.setLastName(source.lastName());
+		driver.setName(source.name());
+		driver.setProofOfDeliveries(source.proofOfDeliveries());
 		return driver;
 	}
 
