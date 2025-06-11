@@ -16,18 +16,15 @@ public class DriverMapper extends AbstractConverter<Driver, DriverDto> {
 		if(Objects.isNull(source)) {
 			throw new IllegalArgumentException("The source argument in a mapper cannot be null");
 		}
-		DriverDto dto = new DriverDto();
-		dto.setId(source.getId());
-		dto.setAge(source.getAge());
-		dto.setAuthorizedDrivingCategories(source.getAuthorizedDrivingCategories());
-		dto.setBillOfLadings(source.getBillOfLadings());
-		dto.setCellPhone(source.getCellPhone());
-		dto.setEmail(source.getEmail());
-		dto.setEmergencyContacts(source.getEmergencyContacts());
-		dto.setLastName(source.getLastName());
-		dto.setName(source.getName());
-		dto.setProofOfDeliveries(source.getProofOfDeliveries());
-		return dto;
+		return new DriverDto(
+				source.getId(), 
+				source.getName(), 
+				source.getLastName(), 
+				source.getCellPhone(), 
+				source.getEmail(), 
+				source.getEmergencyContacts(), 
+				source.getProofOfDeliveries(), 
+				source.getBillOfLadings(), 
+				source.getAuthorizedDrivingCategories());
 	}
-
 }

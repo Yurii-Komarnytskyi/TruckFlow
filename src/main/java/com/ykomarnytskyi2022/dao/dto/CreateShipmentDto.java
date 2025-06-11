@@ -3,15 +3,15 @@ package com.ykomarnytskyi2022.dao.dto;
 import java.util.Optional;
 
 public class CreateShipmentDto extends ShipmentDto {
-	private Optional<DriverDto> driverOptional;
+	private Optional<DriverContactInfoDto> driverOptional;
 	private Optional<CustomerDto> customerOptional;
 	private Optional<LogisticsCoordinatorDto> logisticsCoordinatorOptional;
 
-	public Optional<DriverDto> getDriverOptional() {
+	public Optional<DriverContactInfoDto> getDriverOptional() {
 		return driverOptional;
 	}
 
-	public void setDriverOptional(DriverDto driver) {
+	public void setDriverOptional(DriverContactInfoDto driver) {
 		this.driverOptional = Optional.of(driver);
 	}
 
