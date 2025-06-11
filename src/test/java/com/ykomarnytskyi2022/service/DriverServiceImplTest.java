@@ -109,7 +109,7 @@ class DriverServiceImplTest {
 		@Test
 		@DisplayName("testAcceptShipment with a valid DriverShipmentDto arg")
 		void testAcceptShipment() {
-			DriverShipmentDto dto = new DriverShipmentDto(driverId);
+			DriverShipmentDto dto = new DriverShipmentDto(1L, driverId, false);
 			driverService.acceptShipment(dto);
 			
 			verify(shipmentService, times(1)).assignDriverForShipment(dto, driverId);
