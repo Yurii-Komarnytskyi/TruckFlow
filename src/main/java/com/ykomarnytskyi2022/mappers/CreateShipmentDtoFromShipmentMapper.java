@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.ykomarnytskyi2022.dao.dto.CreateShipmentDto;
 import com.ykomarnytskyi2022.dao.dto.CustomerDto;
-import com.ykomarnytskyi2022.dao.dto.DriverDto;
+import com.ykomarnytskyi2022.dao.dto.DriverContactInfoDto;
 import com.ykomarnytskyi2022.dao.dto.LogisticsCoordinatorDto;
 import com.ykomarnytskyi2022.dao.entity.Customer;
 import com.ykomarnytskyi2022.dao.entity.Driver;
@@ -32,12 +32,13 @@ public class CreateShipmentDtoFromShipmentMapper extends AbstractConverter<Shipm
 		createShipment.setStatus(source.getStatus());
 		
 		if (Objects.nonNull(driver)) {
-			DriverDto driverDto = new DriverDto();
-			driverDto.setId(driver.getId());
-			driverDto.setName(driver.getName());
-			driverDto.setName(driver.getLastName());
-			driverDto.setCellPhone(driver.getCellPhone());
-			driverDto.setEmail(driver.getEmail());
+			DriverContactInfoDto driverDto = new DriverContactInfoDto(
+					driver.getId(), 
+					driver.getName(), 
+					driver.getLastName(), 
+					driver.getCellPhone(), 
+					driver.getEmail(), 
+					driver.getAuthorizedDrivingCategories());
 			createShipment.setDriverOptional(driverDto);
 		}
 		
