@@ -1,4 +1,4 @@
-package com.ykomarnytskyi2022.mapping;
+package com.ykomarnytskyi2022.mappers;
 
 import java.util.Objects;
 
